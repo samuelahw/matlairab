@@ -1,7 +1,6 @@
 package codes.mlg.my_spring_project.dto;
 
 import codes.mlg.my_spring_project.entity.Inventory;
-import codes.mlg.my_spring_project.entity.Player;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +10,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GameDto {
+public class InventoryItemDto {
     private Long id;
-    private int stage;
-    private int balance;
-    private Player player;
+    private Long itemId;
+    private int count;
     private Inventory inventory;
 }

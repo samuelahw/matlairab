@@ -28,4 +28,13 @@ public class Game {
     @JsonIgnore
     @OneToOne(mappedBy = "game")
     private Player player;
+
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "game_inventory",
+            joinColumns =
+                    { @JoinColumn(name = "game_id", referencedColumnName = "id") },
+            inverseJoinColumns =
+                    { @JoinColumn(name = "inventory_id", referencedColumnName = "id") })
+    private Inventory inventory;
 }

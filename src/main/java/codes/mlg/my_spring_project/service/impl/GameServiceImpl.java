@@ -1,9 +1,11 @@
 package codes.mlg.my_spring_project.service.impl;
 
 import codes.mlg.my_spring_project.dto.GameDto;
+import codes.mlg.my_spring_project.dto.InventoryDto;
 import codes.mlg.my_spring_project.entity.Game;
 import codes.mlg.my_spring_project.exception.ResourceNotFoundException;
 import codes.mlg.my_spring_project.mapper.GameMapper;
+import codes.mlg.my_spring_project.mapper.InventoryMapper;
 import codes.mlg.my_spring_project.repository.GameRepository;
 import codes.mlg.my_spring_project.service.GameService;
 import lombok.AllArgsConstructor;
@@ -29,7 +31,12 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public GameDto getGameById(Long gameId) {
-        return null;
+
+        Game game = gameRepository.findById(gameId).orElseThrow(
+                () -> new ResourceNotFoundException("Game does not exist with this given id: " + gameId)
+        );
+
+        return GameMapper.mapToGameDto(game);
     }
 
     @Override
@@ -60,5 +67,17 @@ public class GameServiceImpl implements GameService {
                 () -> new ResourceNotFoundException("Game does not exist with this given id: " + gameId));
 
         gameRepository.deleteById(gameId);
+    }
+
+    @Override
+    public GameDto setInventoryToGame(Long gameId, InventoryDto inventoryDto) {
+        Game game = gameRepository.findById(gameId).orElseThrow(
+                () -> new ResourceNotFoundException("Game does not exist with this given id: " + gameId)
+        );
+
+        game.setInventory(InventoryMapper.mapToInventory(inventoryDto));
+        Game updatedGameObj = gameRepository.save(game);
+
+        return GameMapper.mapToGameDto(updatedGameObj);
     }
 }
