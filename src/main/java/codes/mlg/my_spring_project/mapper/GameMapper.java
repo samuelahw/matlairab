@@ -10,7 +10,8 @@ public class GameMapper {
                 game.getId(),
                 game.getStage(),
                 game.getBalance(),
-                game.getPlayer()
+                game.getPlayer(),
+                game.getInventory()
         );
     }
 
@@ -19,7 +20,8 @@ public class GameMapper {
                 gameDto.getId(),
                 gameDto.getStage(),
                 gameDto.getBalance(),
-                gameDto.getPlayer()
+                gameDto.getPlayer(),
+                gameDto.getInventory()
         );
     }
 }

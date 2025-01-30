@@ -1,6 +1,7 @@
 package codes.mlg.my_spring_project.controller;
 
 import codes.mlg.my_spring_project.dto.GameDto;
+import codes.mlg.my_spring_project.dto.InventoryDto;
 import codes.mlg.my_spring_project.service.GameService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -51,5 +52,13 @@ public class GameController {
     public ResponseEntity<String> deleteGame(@PathVariable("id") Long gameId){
         gameService.deleteGame(gameId);
         return ResponseEntity.ok("Game successfully removed");
+    }
+
+    // Set inventory for game
+    @PutMapping("{id}/inventory")
+    public ResponseEntity<GameDto> setInventoryToGame(@PathVariable("id") Long gameId,
+                                                       @RequestBody InventoryDto inventoryDto) {
+        GameDto gameDto = gameService.setInventoryToGame(gameId, inventoryDto);
+        return ResponseEntity.ok(gameDto);
     }
 }
