@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -37,4 +39,8 @@ public class Game {
             inverseJoinColumns =
                     { @JoinColumn(name = "inventory_id", referencedColumnName = "id") })
     private Inventory inventory;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<GameCharacter> characters;
 }

@@ -15,4 +15,5 @@ public class InventoryItemDto {
     private Long itemId;
     private int count;
     private Inventory inventory;
+    private Boolean equipped;
 }

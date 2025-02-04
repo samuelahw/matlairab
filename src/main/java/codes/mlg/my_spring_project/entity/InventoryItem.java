@@ -28,5 +28,8 @@ public class InventoryItem {
     @JsonIgnore
     private Inventory inventory;
 
+    @Column(name = "equipped")
+    private Boolean equipped;
+
     public InventoryItem() {}
 }
