@@ -11,7 +11,8 @@ public class GameMapper {
                 game.getStage(),
                 game.getBalance(),
                 game.getPlayer(),
-                game.getInventory()
+                game.getInventory(),
+                game.getCharacters()
         );
     }
 
@@ -21,7 +22,8 @@ public class GameMapper {
                 gameDto.getStage(),
                 gameDto.getBalance(),
                 gameDto.getPlayer(),
-                gameDto.getInventory()
+                gameDto.getInventory(),
+                gameDto.getCharacters()
         );
     }
 }

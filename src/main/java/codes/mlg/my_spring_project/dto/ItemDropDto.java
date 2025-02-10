@@ -1,6 +1,7 @@
 package codes.mlg.my_spring_project.dto;
 
-import codes.mlg.my_spring_project.entity.Inventory;
+
+import codes.mlg.my_spring_project.entity.Enemy;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,10 +11,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class InventoryItemDto {
+public class ItemDropDto {
     private Long id;
     private Long itemId;
-    private int count;
-    private Inventory inventory;
-    private Boolean equipped;
+    private double dropChance;
+    private Enemy enemy;
 }

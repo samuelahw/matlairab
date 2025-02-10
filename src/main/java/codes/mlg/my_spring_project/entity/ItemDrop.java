@@ -10,26 +10,23 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @Entity
-@Table(name = "inventory_items")
-public class InventoryItem {
+@Table(name = "item_drops")
+public class ItemDrop {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "item_id")
+    @Column(name="item_id")
     private Long itemId;
 
-    @Column(name = "count")
-    private int count;
+    @Column(name="drop_chance")
+    private double dropChance;
 
     @ManyToOne
-    @JoinColumn(name="inventory_id", nullable=false)
+    @JoinColumn(name="item_drop_id", nullable=false)
     @JsonIgnore
-    private Inventory inventory;
+    private Enemy enemy;
 
-    @Column(name = "equipped")
-    private Boolean equipped;
-
-    public InventoryItem() {}
+    public ItemDrop() {}
 }
