@@ -22,7 +22,7 @@ public class Item {
     private String itemName;
 
     @Column(name = "itemSlot")
-    private String itemSlot;
+    private int itemSlot;
 
     @Column(name = "power")
     private int itemPower;
