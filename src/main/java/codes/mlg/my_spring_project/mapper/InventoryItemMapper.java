@@ -12,8 +12,8 @@ public class InventoryItemMapper {
                 inventoryItem.getItemId(),
                 inventoryItem.getCount(),
                 inventoryItem.getInventory(),
-                inventoryItem.getEquipped()
-
+                inventoryItem.getEquipped(),
+                inventoryItem.getItemSlot()
         );
     }
 
@@ -23,7 +23,8 @@ public class InventoryItemMapper {
                 inventoryItemDto.getItemId(),
                 inventoryItemDto.getCount(),
                 inventoryItemDto.getInventory(),
-                inventoryItemDto.getEquipped()
+                inventoryItemDto.getEquipped(),
+                inventoryItemDto.getItemSlot()
         );
     }
 }

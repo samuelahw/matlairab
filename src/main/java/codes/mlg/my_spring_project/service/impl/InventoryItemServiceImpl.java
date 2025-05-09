@@ -5,16 +5,22 @@ import codes.mlg.my_spring_project.entity.Inventory;
 import codes.mlg.my_spring_project.entity.InventoryItem;
 import codes.mlg.my_spring_project.exception.ResourceNotFoundException;
 import codes.mlg.my_spring_project.mapper.InventoryItemMapper;
+import codes.mlg.my_spring_project.mapper.InventoryMapper;
 import codes.mlg.my_spring_project.repository.InventoryItemRepository;
 import codes.mlg.my_spring_project.service.InventoryItemService;
+import codes.mlg.my_spring_project.service.InventoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
 public class InventoryItemServiceImpl implements InventoryItemService {
 
     private InventoryItemRepository inventoryItemRepository;
+    private InventoryService inventoryService;
 
     @Override
     public InventoryItemDto createInventoryItem(InventoryItemDto inventoryItemDto, Inventory inventory) {
@@ -57,5 +63,21 @@ public class InventoryItemServiceImpl implements InventoryItemService {
                                 ("InventoryItem does not exist with this given id: " + inventoryItemId));
 
         inventoryItemRepository.deleteById(inventoryItemId);
+    }
+
+    @Override
+    public InventoryItemDto findInventoryItemByItemIdFromInventory(Long inventoryId, Long itemId) {
+
+        Inventory pInventory = InventoryMapper.mapToInventory(inventoryService.getInventoryById(inventoryId));
+
+        Set<InventoryItem> inventoryItems = pInventory.getInventoryItems();
+
+        for(InventoryItem item : inventoryItems) {
+            if(Objects.equals(item.getItemId(), itemId)) {
+                return InventoryItemMapper.mapToInventoryItemDto(item);
+            }
+        }
+        
+        return null;
     }
 }

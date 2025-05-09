@@ -9,24 +9,24 @@ public class GameCharacterMapper {
         return new GameCharacterDto(
                 gameCharacter.getId(),
                 gameCharacter.getName(),
-                gameCharacter.getWeapon_slot_item(),
-                gameCharacter.getHead_slot_item(),
-                gameCharacter.getChest_slot_item(),
-                gameCharacter.getLeg_slot_item(),
-                gameCharacter.getAccessory_slot_item(),
+                gameCharacter.getItemSlots(),
+                gameCharacter.getCharacterClass(),
+                gameCharacter.getTotalHealth(),
+                gameCharacter.getMaxPower(),
+                gameCharacter.getMinPower(),
                 gameCharacter.getGame()
         );
     }
 
-    public static GameCharacter mapToCharacter(GameCharacterDto gameCharacterDto) {
+    public static GameCharacter mapToGameCharacter(GameCharacterDto gameCharacterDto) {
         return new GameCharacter(
                 gameCharacterDto.getId(),
                 gameCharacterDto.getName(),
-                gameCharacterDto.getWeaponSlotItem(),
-                gameCharacterDto.getHeadSlotItem(),
-                gameCharacterDto.getChestSlotItem(),
-                gameCharacterDto.getLegSlotItem(),
-                gameCharacterDto.getAccessorySlotItem(),
+                gameCharacterDto.getCharacterClass(),
+                gameCharacterDto.getTotalHealth(),
+                gameCharacterDto.getMaxPower(),
+                gameCharacterDto.getMinPower(),
+                gameCharacterDto.getItemSlots(),
                 gameCharacterDto.getGame()
         );
     }

@@ -31,5 +31,9 @@ public class InventoryItem {
     @Column(name = "equipped")
     private Boolean equipped;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "inventoryItem")
+    private ItemSlot itemSlot;
+
     public InventoryItem() {}
 }
