@@ -17,9 +17,11 @@ public class ItemDto {
     @Size(min = 3, max = 20, message = "Min letters are 3 and max are 20")
     private String name;
 
-    private int itemSlot;
-    private int itemPower;
+    private int itemSlotNumber;
+    private int minItemPower;
+    private int maxItemPower;
     private int defence;
+    private int viableCharacterClass;
 
     @Size(min = 3, max = 100, message = "Min letters are 3 and max are 100")
     private String description;

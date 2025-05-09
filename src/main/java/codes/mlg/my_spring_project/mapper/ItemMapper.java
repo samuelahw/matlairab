@@ -9,9 +9,11 @@ public class ItemMapper {
         return new ItemDto(
                 item.getId(),
                 item.getItemName(),
-                item.getItemSlot(),
-                item.getItemPower(),
+                item.getItemSlotNumber(),
+                item.getMaxItemPower(),
+                item.getMinItemPower(),
                 item.getDefence(),
+                item.getViableCharacterClass(),
                 item.getDescription()
         );
     }
@@ -20,9 +22,11 @@ public class ItemMapper {
         return new Item(
                 itemDto.getId(),
                 itemDto.getName(),
-                itemDto.getItemSlot(),
-                itemDto.getItemPower(),
+                itemDto.getItemSlotNumber(),
+                itemDto.getMaxItemPower(),
+                itemDto.getMinItemPower(),
                 itemDto.getDefence(),
+                itemDto.getViableCharacterClass(),
                 itemDto.getDescription()
         ) ;
     }

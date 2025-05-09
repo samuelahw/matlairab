@@ -11,4 +11,6 @@ public interface InventoryItemService {
     InventoryItemDto updateInventoryItemCount(Long inventoryItemId, int count);
 
     void deleteInventoryItem(Long inventoryItemId);
+
+    InventoryItemDto findInventoryItemByItemIdFromInventory(Long inventoryId, Long ItemId);
 }

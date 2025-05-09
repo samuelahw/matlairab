@@ -1,6 +1,7 @@
 package codes.mlg.my_spring_project.dto;
 
 import codes.mlg.my_spring_project.entity.Inventory;
+import codes.mlg.my_spring_project.entity.ItemSlot;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -26,4 +27,6 @@ public class InventoryItemDto {
 
     @NotNull
     private Boolean equipped;
+
+    private ItemSlot itemSlot;
 }

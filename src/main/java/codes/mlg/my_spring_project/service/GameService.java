@@ -17,4 +17,6 @@ public interface GameService {
     void deleteGame(Long gameId);
 
     GameDto setInventoryToGame(Long gameId, InventoryDto inventoryDto);
+
+    GameDto createNewGameByPlayerId(Long playerId);
 }

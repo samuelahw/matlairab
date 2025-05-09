@@ -39,8 +39,8 @@ public class ItemServiceImpl implements ItemService {
                         new ResourceNotFoundException("Item does not exist with this given id: " + itemId));
 
         item.setItemName(updatedItem.getName());
-        item.setItemSlot(updatedItem.getItemSlot());
-        item.setItemPower(updatedItem.getItemPower());
+        item.setItemSlotNumber(updatedItem.getItemSlotNumber());
+
         item.setDefence(updatedItem.getDefence());
         item.setDescription(updatedItem.getDescription());
 

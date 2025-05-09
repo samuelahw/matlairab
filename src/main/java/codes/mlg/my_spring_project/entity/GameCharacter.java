@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,20 +23,21 @@ public class GameCharacter {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "weapon_slot_item")
-    private int weapon_slot_item;
+    @Column(name = "character_class")
+    private int characterClass;
 
-    @Column(name = "head_slot_item")
-    private int head_slot_item;
+    @Column(name =" total_health")
+    private int totalHealth;
 
-    @Column(name = "chest_slot_item")
-    private int chest_slot_item;
+    @Column(name =" max_power")
+    private int maxPower;
 
-    @Column(name = "legs_slot_item")
-    private int leg_slot_item;
+    @Column(name =" min_power")
+    private int minPower;
 
-    @Column(name = "accessory_item_slot")
-    private int accessory_slot_item;
+    @JsonIgnore
+    @OneToMany(mappedBy = "gameCharacter", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ItemSlot> itemSlots;
 
     @ManyToOne
     @JoinColumn(name = "character_id", nullable = false)

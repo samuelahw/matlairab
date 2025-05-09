@@ -17,7 +17,7 @@ public class GameController {
 
     private GameService gameService;
 
-    // Post new game
+    // Post new empty game
     @PostMapping // POST: localhost:8080/api/v1/games
     public ResponseEntity<GameDto> createGame(@RequestBody GameDto gameDto) {
         GameDto savedGame = gameService.createGame(gameDto);
@@ -60,5 +60,12 @@ public class GameController {
                                                        @RequestBody InventoryDto inventoryDto) {
         GameDto gameDto = gameService.setInventoryToGame(gameId, inventoryDto);
         return ResponseEntity.ok(gameDto);
+    }
+
+    // Create new game for player
+    @PostMapping("player/{id}")
+    public ResponseEntity<GameDto> createGameForPlayer(@PathVariable("id") Long playerId) {
+        GameDto savedGame = gameService.createNewGameByPlayerId(playerId);
+        return new ResponseEntity<>(savedGame, HttpStatus.CREATED);
     }
 }

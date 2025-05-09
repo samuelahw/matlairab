@@ -25,7 +25,7 @@ public class GameCharacterController {
     public ResponseEntity<GameCharacter> createGameCharacter(@PathVariable("id") Long gameId,
                                                              @RequestBody GameCharacter gameCharacterRequest){
         GameCharacterDto gameCharacterDto = gameCharacterService.createGameCharacter(GameCharacterMapper.mapToGameCharacterDto(gameCharacterRequest), GameMapper.mapToGame(gameService.getGameById(gameId)));
-        GameCharacter gameCharacter = GameCharacterMapper.mapToCharacter(gameCharacterDto);
+        GameCharacter gameCharacter = GameCharacterMapper.mapToGameCharacter(gameCharacterDto);
 
         return new ResponseEntity<>(gameCharacter, HttpStatus.CREATED);
     }
@@ -51,5 +51,14 @@ public class GameCharacterController {
     public ResponseEntity<String> deleteGameCharacter(@PathVariable("id") Long gameCharacterId){
         gameCharacterService.deleteGameCharacter(gameCharacterId);
         return ResponseEntity.ok("GameCharacter successfully removed");
+    }
+
+    // Equip item for GameCharacter
+    @GetMapping("{id}/player/{gcId}/character/{iId}")
+    public ResponseEntity<Boolean> equipItem(@PathVariable("id") Long playerId, @PathVariable("gcId") Long gameCharacterId, @PathVariable("iId") Long itemId) {
+
+        if(gameCharacterService.equipItemForGameCharacter(playerId,gameCharacterId,itemId)) return ResponseEntity.ok(true);
+        else return ResponseEntity.ok(false);
+
     }
 }

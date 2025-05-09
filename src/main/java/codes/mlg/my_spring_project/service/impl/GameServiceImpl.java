@@ -2,16 +2,22 @@ package codes.mlg.my_spring_project.service.impl;
 
 import codes.mlg.my_spring_project.dto.GameDto;
 import codes.mlg.my_spring_project.dto.InventoryDto;
-import codes.mlg.my_spring_project.entity.Game;
+import codes.mlg.my_spring_project.entity.*;
 import codes.mlg.my_spring_project.exception.ResourceNotFoundException;
+import codes.mlg.my_spring_project.mapper.GameCharacterMapper;
 import codes.mlg.my_spring_project.mapper.GameMapper;
 import codes.mlg.my_spring_project.mapper.InventoryMapper;
-import codes.mlg.my_spring_project.repository.GameRepository;
+import codes.mlg.my_spring_project.mapper.PlayerMapper;
+import codes.mlg.my_spring_project.repository.*;
+import codes.mlg.my_spring_project.service.GameCharacterService;
 import codes.mlg.my_spring_project.service.GameService;
+import codes.mlg.my_spring_project.service.PlayerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,6 +25,11 @@ import java.util.stream.Collectors;
 public class GameServiceImpl implements GameService {
 
     private GameRepository gameRepository;
+    private GameCharacterRepository gameCharacterRepository;
+    private PlayerRepository playerRepository;
+    private InventoryRepository inventoryRepository;
+    private PlayerService playerService;
+    private GameCharacterService gameCharacterService;
 
     @Override
     public GameDto createGame(GameDto gameDto) {
@@ -79,5 +90,61 @@ public class GameServiceImpl implements GameService {
         Game updatedGameObj = gameRepository.save(game);
 
         return GameMapper.mapToGameDto(updatedGameObj);
+    }
+
+    // Creating new game for player
+    @Override
+    public GameDto createNewGameByPlayerId(Long playerId) {
+        Game gameInit = new Game();
+        Inventory inventoryInit = new Inventory();
+
+        Game game = gameRepository.save(gameInit);
+
+        Player player = PlayerMapper.mapToPlayer(playerService.getPlayerById(playerId));
+
+        Inventory inventory = inventoryRepository.save(inventoryInit);
+
+        GameCharacter tank = new GameCharacter();
+        GameCharacter healer = new GameCharacter();
+        GameCharacter damager = new GameCharacter();
+
+        tank.setCharacterClass(1);
+        healer.setCharacterClass(2);
+        damager.setCharacterClass(3);
+
+        tank.setGame(game);
+        healer.setGame(game);
+        damager.setGame(game);
+
+        tank.setName("Tank");
+        healer.setName("Healer");
+        damager.setName("Damager");
+
+        tank = GameCharacterMapper.mapToGameCharacter(gameCharacterService.setItemSlotsToGameCharacter(tank));
+        healer = GameCharacterMapper.mapToGameCharacter(gameCharacterService.setItemSlotsToGameCharacter(healer));
+        damager = GameCharacterMapper.mapToGameCharacter(gameCharacterService.setItemSlotsToGameCharacter(damager));
+
+        Set<GameCharacter> gameCharacters = new HashSet<>();
+
+        gameCharacters.add(tank);
+        gameCharacters.add(healer);
+        gameCharacters.add(damager);
+
+        game.setCharacters(gameCharacters);
+
+        player.setGame(game);
+        game.setPlayer(player);
+        inventory.setGame(game);
+        game.setInventory(inventory);
+
+        playerRepository.save(player);
+        inventoryRepository.save(inventory);
+        gameCharacterRepository.save(tank);
+        gameCharacterRepository.save(healer);
+        gameCharacterRepository.save(damager);
+
+        Game savedGame = gameRepository.save(game);
+
+        return GameMapper.mapToGameDto(savedGame);
     }
 }

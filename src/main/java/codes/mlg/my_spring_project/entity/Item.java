@@ -21,14 +21,20 @@ public class Item {
     @Column(name="name")
     private String itemName;
 
-    @Column(name = "itemSlot")
-    private int itemSlot;
+    @Column(name = "item_slot_number")
+    private int itemSlotNumber;
 
-    @Column(name = "power")
-    private int itemPower;
+    @Column(name = "min_item_power")
+    private int minItemPower;
+
+    @Column(name = "max_item_power")
+    private int maxItemPower;
 
     @Column(name = "defence")
     private int defence;
+
+    @Column(name = "viable_character_class")
+    private int viableCharacterClass;
 
     @Column(name = "description")
     private String description;
