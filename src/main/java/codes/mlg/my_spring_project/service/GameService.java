@@ -19,4 +19,6 @@ public interface GameService {
     GameDto setInventoryToGame(Long gameId, InventoryDto inventoryDto);
 
     GameDto createNewGameByPlayerId(Long playerId);
+
+    String fightStage(Long playerId, Long stageId);
 }

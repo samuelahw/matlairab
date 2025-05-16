@@ -4,14 +4,17 @@ import codes.mlg.my_spring_project.dto.GameDto;
 import codes.mlg.my_spring_project.dto.InventoryDto;
 import codes.mlg.my_spring_project.entity.*;
 import codes.mlg.my_spring_project.exception.ResourceNotFoundException;
+import codes.mlg.my_spring_project.gameplay.FightCalculator;
 import codes.mlg.my_spring_project.mapper.GameCharacterMapper;
 import codes.mlg.my_spring_project.mapper.GameMapper;
 import codes.mlg.my_spring_project.mapper.InventoryMapper;
 import codes.mlg.my_spring_project.mapper.PlayerMapper;
+import codes.mlg.my_spring_project.mapper.StageMapper;
 import codes.mlg.my_spring_project.repository.*;
 import codes.mlg.my_spring_project.service.GameCharacterService;
 import codes.mlg.my_spring_project.service.GameService;
 import codes.mlg.my_spring_project.service.PlayerService;
+import codes.mlg.my_spring_project.service.StageService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +33,8 @@ public class GameServiceImpl implements GameService {
     private InventoryRepository inventoryRepository;
     private PlayerService playerService;
     private GameCharacterService gameCharacterService;
+    private FightCalculator fightCalculator;
+    private StageService stageService;
 
     @Override
     public GameDto createGame(GameDto gameDto) {
@@ -44,8 +49,7 @@ public class GameServiceImpl implements GameService {
     public GameDto getGameById(Long gameId) {
 
         Game game = gameRepository.findById(gameId).orElseThrow(
-                () -> new ResourceNotFoundException("Game does not exist with this given id: " + gameId)
-        );
+                () -> new ResourceNotFoundException("Game does not exist with this given id: " + gameId));
 
         return GameMapper.mapToGameDto(game);
     }
@@ -61,8 +65,7 @@ public class GameServiceImpl implements GameService {
     public GameDto updateGame(Long gameId, GameDto updatedGame) {
 
         Game game = gameRepository.findById(gameId).orElseThrow(
-                () -> new ResourceNotFoundException("Game does not exist with this given id: " + gameId)
-        );
+                () -> new ResourceNotFoundException("Game does not exist with this given id: " + gameId));
 
         game.setBalance(updatedGame.getBalance());
         game.setStage(updatedGame.getStage());
@@ -83,8 +86,7 @@ public class GameServiceImpl implements GameService {
     @Override
     public GameDto setInventoryToGame(Long gameId, InventoryDto inventoryDto) {
         Game game = gameRepository.findById(gameId).orElseThrow(
-                () -> new ResourceNotFoundException("Game does not exist with this given id: " + gameId)
-        );
+                () -> new ResourceNotFoundException("Game does not exist with this given id: " + gameId));
 
         game.setInventory(InventoryMapper.mapToInventory(inventoryDto));
         Game updatedGameObj = gameRepository.save(game);
@@ -146,5 +148,15 @@ public class GameServiceImpl implements GameService {
         Game savedGame = gameRepository.save(game);
 
         return GameMapper.mapToGameDto(savedGame);
+    }
+
+    @Override
+    public String fightStage(Long playerId, Long stageId) {
+
+        Player player = PlayerMapper.mapToPlayer(playerService.getPlayerById(playerId));
+
+        Stage stage = StageMapper.mapToStage(stageService.getStageById(stageId));
+
+        return fightCalculator.calculateFight(player, stage);
     }
 }

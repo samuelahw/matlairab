@@ -21,19 +21,22 @@ public class Enemy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="health")
+    @Column(name = "health")
     private int health;
 
-    @Column(name="damage")
-    private int damage;
+    @Column(name = "min_damage")
+    private int minDamage;
 
-    @Column(name="defence")
+    @Column(name = "max_damage")
+    private int maxDamage;
+
+    @Column(name = "defence")
     private int defence;
 
-    @Column(name="min_coin_drop")
+    @Column(name = "min_coin_drop")
     private int minCoinDrop;
 
-    @Column(name="max_coin_drop")
+    @Column(name = "max_coin_drop")
     private int maxCoinDrop;
 
     @JsonIgnore
