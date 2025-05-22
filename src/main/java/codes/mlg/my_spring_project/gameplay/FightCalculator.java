@@ -1,9 +1,12 @@
 package codes.mlg.my_spring_project.gameplay;
 
 import codes.mlg.my_spring_project.entity.Stage;
+import codes.mlg.my_spring_project.service.InventoryItemService;
 import lombok.AllArgsConstructor;
 
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,8 @@ import codes.mlg.my_spring_project.entity.Player;
 public class FightCalculator {
 
     DropCalculator dropCalculator = new DropCalculator();
+
+    InventoryItemService inventoryItemService;
 
     public String calculateFight(Player player, Stage stage) {
 
@@ -68,7 +73,17 @@ public class FightCalculator {
 
             // Win
             if (enemyHp <= 0) {
-                return fightLog + dropCalculator.calculateDrop(enemy) + "W";
+                String dropString = dropCalculator.calculateDrop(enemy);
+
+                // add item to inventory if item dropped
+                if (!dropString.contains("empty")) {
+                    Matcher matcher = Pattern.compile("\\d+").matcher(dropString);
+                    matcher.find();
+                    int itemId = Integer.parseInt(matcher.group());
+
+                    inventoryItemService.addInventoryItemToInventory(player.getId(), Long.valueOf(itemId));
+                }
+                return fightLog + dropString + "W";
             }
             currentTick++;
         }

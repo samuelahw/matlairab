@@ -1,9 +1,7 @@
 package codes.mlg.my_spring_project.dto;
 
-
 import codes.mlg.my_spring_project.entity.Enemy;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
