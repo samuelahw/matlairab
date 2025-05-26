@@ -157,6 +157,51 @@ public class GameServiceImpl implements GameService {
 
         Stage stage = StageMapper.mapToStage(stageService.getStageById(stageId));
 
-        return fightCalculator.calculateFight(player, stage);
+        String fightResult = fightCalculator.calculateFight(player, stage);
+
+        if (fightResult.charAt(fightResult.length() - 1) == 'W') {
+            String coinString = fightResult.substring(fightResult.lastIndexOf(":") + 1, fightResult.lastIndexOf("]"));
+            editBalanceAddition(playerId, Integer.parseInt(coinString));
+        } else if (fightResult.charAt(fightResult.length() - 1) == 'L') {
+            // Losing will reduce the balance by 20%
+            editBalanceMultiplication(playerId, 0.8);
+        }
+        return fightResult;
+    }
+
+    @Override
+    public int editBalanceAddition(Long playerId, int amount) {
+
+        Game game = GameMapper.mapToGame(getGameByPlayerId(playerId));
+
+        int currentBalance = game.getBalance();
+        int newBalance = currentBalance + amount;
+
+        game.setBalance(newBalance);
+
+        gameRepository.save(game);
+
+        return newBalance;
+
+    }
+
+    @Override
+    public int editBalanceMultiplication(Long playerId, double rate) {
+
+        Game game = GameMapper.mapToGame(getGameByPlayerId(playerId));
+
+        double currentBalance = game.getBalance();
+        int newBalance = (int) (currentBalance * rate);
+
+        game.setBalance(newBalance);
+
+        gameRepository.save(game);
+
+        return newBalance;
+    }
+
+    @Override
+    public GameDto getGameByPlayerId(Long playerId) {
+        return GameMapper.mapToGameDto(playerService.getPlayerById(playerId).getGame());
     }
 }

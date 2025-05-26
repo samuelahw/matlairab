@@ -21,4 +21,10 @@ public interface GameService {
     GameDto createNewGameByPlayerId(Long playerId);
 
     String fightStage(Long playerId, Long stageId);
+
+    GameDto getGameByPlayerId(Long playerId);
+
+    int editBalanceAddition(Long playerId, int amount);
+
+    int editBalanceMultiplication(Long playerId, double rate);
 }
