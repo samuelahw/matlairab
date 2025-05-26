@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @AllArgsConstructor
 @RestController
@@ -33,7 +34,7 @@ public class GameController {
 
     // Get all games
     @GetMapping // GET: localhost:8080/api/v1/games
-    public ResponseEntity<List<GameDto>> getAllGames(){
+    public ResponseEntity<List<GameDto>> getAllGames() {
         List<GameDto> games = gameService.getAllGames();
         return ResponseEntity.ok(games);
     }
@@ -41,7 +42,7 @@ public class GameController {
     // Update game data
     @PutMapping("{id}") // PUT localhost:8080/api/v1/games/<game_id>
     public ResponseEntity<GameDto> updateGame(@PathVariable("id") Long gameId,
-                                                  @RequestBody GameDto updatedGame) {
+            @RequestBody GameDto updatedGame) {
         GameDto updatedGameDto = gameService.updateGame(gameId, updatedGame);
         return ResponseEntity.ok(updatedGameDto);
 
@@ -49,7 +50,7 @@ public class GameController {
 
     // Delete game
     @DeleteMapping("{id}") // DELETE localhost:8080/api/v1/games/<game_id>
-    public ResponseEntity<String> deleteGame(@PathVariable("id") Long gameId){
+    public ResponseEntity<String> deleteGame(@PathVariable("id") Long gameId) {
         gameService.deleteGame(gameId);
         return ResponseEntity.ok("Game successfully removed");
     }
@@ -57,7 +58,7 @@ public class GameController {
     // Set inventory for game
     @PutMapping("{id}/inventory")
     public ResponseEntity<GameDto> setInventoryToGame(@PathVariable("id") Long gameId,
-                                                       @RequestBody InventoryDto inventoryDto) {
+            @RequestBody InventoryDto inventoryDto) {
         GameDto gameDto = gameService.setInventoryToGame(gameId, inventoryDto);
         return ResponseEntity.ok(gameDto);
     }
@@ -68,4 +69,15 @@ public class GameController {
         GameDto savedGame = gameService.createNewGameByPlayerId(playerId);
         return new ResponseEntity<>(savedGame, HttpStatus.CREATED);
     }
+
+    // Get fight result
+    @GetMapping("/player/{id}/fight/{stageId}")
+    public ResponseEntity<String> getFightStageResult(@PathVariable("id") Long playerId,
+            @PathVariable("stageId") Long stageId) {
+
+        String result = gameService.fightStage(playerId, stageId);
+
+        return ResponseEntity.ok(result);
+    }
+
 }

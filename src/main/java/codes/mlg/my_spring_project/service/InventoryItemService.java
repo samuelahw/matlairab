@@ -13,4 +13,8 @@ public interface InventoryItemService {
     void deleteInventoryItem(Long inventoryItemId);
 
     InventoryItemDto findInventoryItemByItemIdFromInventory(Long inventoryId, Long ItemId);
+
+    Boolean itemExistsInPlayerInventory(Long playerId, Long ItemId);
+
+    Boolean addInventoryItemToInventory(Long playerId, Long itemId);
 }
