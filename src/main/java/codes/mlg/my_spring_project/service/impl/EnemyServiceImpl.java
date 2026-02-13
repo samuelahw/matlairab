@@ -41,7 +41,8 @@ public class EnemyServiceImpl implements EnemyService {
                         new ResourceNotFoundException("Enemy does not exist with this given id: " + enemyId));
 
         enemy.setHealth(updatedEnemy.getHealth());
-        enemy.setDamage(updatedEnemy.getDamage());
+        enemy.setMinDamage(updatedEnemy.getMinDamage());
+        enemy.setMaxDamage(updatedEnemy.getMaxDamage());
         enemy.setDefence(updatedEnemy.getDefence());
         enemy.setMinCoinDrop(updatedEnemy.getMinCoinDrop());
         enemy.setMaxCoinDrop(updatedEnemy.getMaxCoinDrop());
