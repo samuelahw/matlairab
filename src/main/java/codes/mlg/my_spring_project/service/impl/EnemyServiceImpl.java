@@ -28,8 +28,8 @@ public class EnemyServiceImpl implements EnemyService {
     public EnemyDto getEnemyById(Long enemyId) {
 
         Enemy enemy = enemyRepository.findById(enemyId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Enemy does not exist with this given id: " + enemyId));
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Enemy does not exist with this given id: " + enemyId));
 
         return EnemyMapper.mapToEnemyDto(enemy);
     }
@@ -37,8 +37,8 @@ public class EnemyServiceImpl implements EnemyService {
     @Override
     public EnemyDto updateEnemy(Long enemyId, EnemyDto updatedEnemy) {
         Enemy enemy = enemyRepository.findById(enemyId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Enemy does not exist with this given id: " + enemyId));
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Enemy does not exist with this given id: " + enemyId));
 
         enemy.setHealth(updatedEnemy.getHealth());
         enemy.setMinDamage(updatedEnemy.getMinDamage());
@@ -55,8 +55,8 @@ public class EnemyServiceImpl implements EnemyService {
     @Override
     public void deleteEnemy(Long enemyId) {
         Enemy enemy = enemyRepository.findById(enemyId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Enemy does not exist with this given id: " + enemyId));
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Enemy does not exist with this given id: " + enemyId));
         enemyRepository.deleteById(enemyId);
     }
 }
